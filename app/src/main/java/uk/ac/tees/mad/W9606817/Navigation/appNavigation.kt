@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import uk.ac.tees.mad.W9606817.MainViewModel
 import uk.ac.tees.mad.W9606817.Screens.AuthenticationScreen
+import uk.ac.tees.mad.W9606817.Screens.LoginScreen
+import uk.ac.tees.mad.W9606817.Screens.RegistrationScreen
 import uk.ac.tees.mad.W9606817.Screens.SplashScreen
 
 enum class NavigateInApp(val route:String){
@@ -26,7 +28,14 @@ fun appNavigation(){
             SplashScreen(vm,navController)
         }
         composable(NavigateInApp.AUTHENTICATIONSCREEN.route){
-            AuthenticationScreen()
+            AuthenticationScreen(vm,navController)
         }
+        composable(NavigateInApp.REGISTER.route){
+            RegistrationScreen(vm,navController)
+        }
+        composable(NavigateInApp.LOGIN.route){
+            LoginScreen(vm,navController)
+        }
+
     }
 }

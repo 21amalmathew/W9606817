@@ -1,0 +1,56 @@
+package uk.ac.tees.mad.W9606817.Screens
+
+import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import uk.ac.tees.mad.W9606817.MainViewModel
+
+
+@Composable
+fun RegistrationScreen(vm: MainViewModel, navController: NavController) {
+    val email = remember {
+        mutableStateOf("")
+    }
+    val password = remember {
+        mutableStateOf("")
+    }
+    val context = LocalContext.current
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        OutlinedTextField(
+            value = email.value,
+            onValueChange = { email.value = it },
+            label = { Text("Email") })
+        OutlinedTextField(
+            value = password.value,
+            onValueChange = { password.value = it },
+            label = { Text("password") })
+        Button(onClick = {
+            if (email.value.isNotEmpty() && password.value.isNotEmpty()) {
+                vm.signUp(context = context, email = email.value, password = password.value)
+                email.value = ""
+                password.value = ""
+            }
+            else{
+                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            }
+        }) {
+            Text(text = "Sign Up")
+        }
+    }
+
+}

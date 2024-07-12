@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "280835999219",
+    "project_id": "daily-quote-63b23",
+    "storage_bucket": "daily-quote-63b23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280835999219:android:c4f82b874b6996e31b3e86",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.mad.W9606817"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9UN3n77WOX4nbBv-zZHB752iZ-WykunA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
