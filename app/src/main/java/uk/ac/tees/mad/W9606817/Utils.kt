@@ -11,8 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
+import uk.ac.tees.mad.W9606817.Navigation.NavigateInApp
 
 @Composable
 fun CommonProgressBar() {
         CircularProgressIndicator()
+}
+fun checkSignedIn(vm: MainViewModel, navController: NavController) {
+        val currentUser = vm.currentUser
+
+        if (currentUser != null) {
+                navController.navigate(NavigateInApp.HOME.route)
+        }
 }

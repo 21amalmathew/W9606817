@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import uk.ac.tees.mad.W9606817.MainViewModel
 import uk.ac.tees.mad.W9606817.Screens.AuthenticationScreen
+import uk.ac.tees.mad.W9606817.Screens.HomeScreen
 import uk.ac.tees.mad.W9606817.Screens.LoginScreen
 import uk.ac.tees.mad.W9606817.Screens.RegistrationScreen
 import uk.ac.tees.mad.W9606817.Screens.SplashScreen
@@ -36,6 +37,8 @@ fun appNavigation(){
         composable(NavigateInApp.LOGIN.route){
             LoginScreen(vm,navController)
         }
-
+        composable(NavigateInApp.HOME.route){
+            HomeScreen(vm,navController)
+        }
     }
 }

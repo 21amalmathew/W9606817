@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor(
     private val auth : FirebaseAuth,
     private val db : FirebaseFirestore
 ): ViewModel() {
+    val currentUser = auth.currentUser
     private val _loading = MutableStateFlow(true)
     val loading: StateFlow<Boolean> = _loading.asStateFlow()
 

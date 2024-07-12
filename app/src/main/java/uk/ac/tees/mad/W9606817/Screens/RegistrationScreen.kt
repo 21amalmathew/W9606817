@@ -16,12 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import uk.ac.tees.mad.W9606817.MainViewModel
+import uk.ac.tees.mad.W9606817.Navigation.NavigateInApp
 
 
 @Composable
 fun RegistrationScreen(vm: MainViewModel, navController: NavController) {
     val isLoading = vm.isLoading
+    val loggedIn = vm.isSignedIn
 
+    if (loggedIn.value){
+        navController.navigate(NavigateInApp.HOME.route)
+    }
     val email = remember {
         mutableStateOf("")
     }

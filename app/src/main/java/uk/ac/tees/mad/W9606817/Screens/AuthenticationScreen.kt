@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import uk.ac.tees.mad.W9606817.MainViewModel
 import uk.ac.tees.mad.W9606817.Navigation.NavigateInApp
+import uk.ac.tees.mad.W9606817.checkSignedIn
 
 @Composable
 fun AuthenticationScreen(vm: MainViewModel, navController: NavController) {
+    checkSignedIn(vm, navController)
     Box(modifier = Modifier.fillMaxSize()){
         Column(modifier = Modifier.align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
