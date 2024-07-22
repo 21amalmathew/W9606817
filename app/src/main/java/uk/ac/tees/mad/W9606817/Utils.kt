@@ -22,6 +22,8 @@ fun checkSignedIn(vm: MainViewModel, navController: NavController) {
         val currentUser = vm.currentUser
 
         if (currentUser != null) {
-                navController.navigate(NavigateInApp.HOME.route)
+                navController.navigate(NavigateInApp.HOME.route){
+                        popUpTo(0)
+                }
         }
 }
