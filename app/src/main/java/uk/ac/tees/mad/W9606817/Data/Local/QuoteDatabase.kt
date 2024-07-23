@@ -8,42 +8,20 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Quote::class], version = 1)
+@Database(entities = [Quote::class], version = 2)
 abstract class QuoteDatabase : RoomDatabase() {
     abstract fun quoteDao(): QuoteDao
 
-    companion object {
+    companion object{
         @Volatile
-        private var INSTANCE: QuoteDatabase? = null
+        private var Instance : QuoteDatabase? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): QuoteDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    QuoteDatabase::class.java,
-                    "quote_database"
-                )
-                    .addCallback(QuoteDatabaseCallback(scope))
+        fun getDatabase(context: Context):QuoteDatabase {
+            return Instance?: synchronized(this){
+                Room.databaseBuilder(context,QuoteDatabase::class.java,"quote_database")
+                    .fallbackToDestructiveMigration()
                     .build()
-                INSTANCE = instance
-                instance
-            }
-        }
-
-        private class QuoteDatabaseCallback(
-            private val scope: CoroutineScope
-        ) : RoomDatabase.Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                INSTANCE?.let { database ->
-                    scope.launch {
-                        populateDatabase(database.quoteDao())
-                    }
-                }
-            }
-
-            suspend fun populateDatabase(quoteDao: QuoteDao) {
-                // Pre-populate database if needed
+                    .also { Instance = it }
             }
         }
     }

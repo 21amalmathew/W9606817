@@ -9,11 +9,11 @@ import androidx.room.Update
 
 @Dao
 interface QuoteDao {
-    @Query ("SELECT * FROM quotes WHERE date =:date")
-    suspend fun getQuoteByDate(date:String):Quote
+//    @Query ("SELECT * FROM quotes WHERE date =:date")
+//    suspend fun getQuoteByDate(date:String):Quote
 
     @Query ("SELECT * FROM quotes")
-    fun getallQuote(): LiveData<List<Quote>>
+    suspend fun getallQuote(): List<Quote>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertQuote(quote:List<Quote>)

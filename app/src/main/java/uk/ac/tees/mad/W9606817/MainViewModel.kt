@@ -4,16 +4,21 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import uk.ac.tees.mad.W9606817.Data.Local.Quote
 import uk.ac.tees.mad.W9606817.Repository.QuoteRepository
 import javax.inject.Inject
 
@@ -30,26 +35,47 @@ class MainViewModel @Inject constructor(
     val isSignedIn = mutableStateOf(false)
     val isLoading = mutableStateOf(false)
 
+    private val _quotes = MutableLiveData<List<Quote>>()
+    val quotes: LiveData<List<Quote>> get() = _quotes
     init {
         viewModelScope.launch {
             delay(1000L)
             _loading.emit(false)
         }
-        getQuotes()
+        getandStore()
     }
 
-    fun getQuotes() {
-        viewModelScope.launch {
+    fun getandStore(){
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.loadQuotes()
-                Log.d("MainViewModel", "Quotes Loaded")
-                val quotes = repository.quotes
-                Log.d("MainViewModel", "Quotes: $quotes")
-            } catch (e: Exception) {
-                Log.e("MainViewModel", "Error fetching quotes", e)
+                repository.getQuotesAndStore()
+            }catch (e:Exception){
+                Log.d("MainViewModel", "Error fetching quotes", e)
             }
+            loadQuotes()
         }
     }
+    private fun loadQuotes() {
+
+        viewModelScope.launch {
+            _quotes.value = repository.getAllQuotes()
+            Log.d("MainViewModel", _quotes.value.toString())
+        }
+    }
+
+
+//    fun getQuotes() {
+//        viewModelScope.launch {
+//            try {
+//                repository.loadQuotes(5)
+//                Log.d("MainViewModel", "Quotes Loaded")
+//                val quotes = repository.quotes
+//                Log.d("MainViewModel", "Quotes: $quotes")
+//            } catch (e: Exception) {
+//                Log.e("MainViewModel", "Error fetching quotes", e)
+//            }
+//        }
+//    }
 
     fun signUp(context: Context, email: String, password: String) {
         isLoading.value = true
