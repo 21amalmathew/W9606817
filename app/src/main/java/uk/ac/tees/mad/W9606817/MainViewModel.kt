@@ -6,9 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -16,12 +14,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import uk.ac.tees.mad.W9606817.Repository.QuoteRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val auth : FirebaseAuth,
-    private val db : FirebaseFirestore
+    private val db : FirebaseFirestore,
+    private val repository: QuoteRepository
 ): ViewModel() {
     val currentUser = auth.currentUser
     private val _loading = MutableStateFlow(true)
@@ -34,6 +34,20 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             delay(1000L)
             _loading.emit(false)
+        }
+        getQuotes()
+    }
+
+    fun getQuotes() {
+        viewModelScope.launch {
+            try {
+                repository.loadQuotes()
+                Log.d("MainViewModel", "Quotes Loaded")
+                val quotes = repository.quotes
+                Log.d("MainViewModel", "Quotes: $quotes")
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "Error fetching quotes", e)
+            }
         }
     }
 
@@ -81,4 +95,5 @@ class MainViewModel @Inject constructor(
                 Toast.makeText(context,it.localizedMessage,Toast.LENGTH_SHORT).show()
             }
     }
+
 }
