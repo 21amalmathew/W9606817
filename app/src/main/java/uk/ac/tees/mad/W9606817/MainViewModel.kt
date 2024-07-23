@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uk.ac.tees.mad.W9606817.Data.Local.Quote
 import uk.ac.tees.mad.W9606817.Repository.QuoteRepository
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +40,13 @@ class MainViewModel @Inject constructor(
 
     private val _quotes = MutableLiveData<List<Quote>>()
     val quotes: LiveData<List<Quote>> get() = _quotes
+
+    private val _quotesFromYesterday = MutableLiveData<List<Quote>> ()
+    val quotesFromYesterday : LiveData<List<Quote>> get() = _quotesFromYesterday
+
+    private val _quotesFromToday = MutableLiveData<List<Quote>> ()
+    val quotesFromToday: LiveData<List<Quote>> get() = _quotesFromToday
+
     init {
         viewModelScope.launch {
             delay(1000L)
@@ -47,35 +57,42 @@ class MainViewModel @Inject constructor(
 
     fun getandStore(){
         viewModelScope.launch(Dispatchers.IO) {
+
             try {
                 repository.getQuotesAndStore()
             }catch (e:Exception){
                 Log.d("MainViewModel", "Error fetching quotes", e)
             }
-            loadQuotes()
+            quotesFromTodays()
+            quotesFromYesterday()
+            loadAllQuotes()
         }
     }
-    private fun loadQuotes() {
+
+    fun quotesFromTodays () {
+        viewModelScope.launch(Dispatchers.IO) {
+            val quotesfromtoday = repository.getQuotesFromToday()
+            _quotesFromToday.postValue(quotesfromtoday)
+            Log.d("Todays Quote", quotesfromtoday.toString())
+        }
+    }
+
+    fun quotesFromYesterday (){
+        viewModelScope.launch(Dispatchers.IO) {
+            val quotesFromYesterday = repository.getQuotesFromYesterday()
+            _quotesFromYesterday.postValue(quotesFromYesterday)
+            Log.d("Yesterday Quote", quotesFromYesterday.toString())
+        }
+    }
+
+    private fun loadAllQuotes() {
 
         viewModelScope.launch {
             _quotes.value = repository.getAllQuotes()
             Log.d("MainViewModel", _quotes.value.toString())
+            Log.d("Todays Quote", _quotesFromToday.value.toString())
         }
     }
-
-
-//    fun getQuotes() {
-//        viewModelScope.launch {
-//            try {
-//                repository.loadQuotes(5)
-//                Log.d("MainViewModel", "Quotes Loaded")
-//                val quotes = repository.quotes
-//                Log.d("MainViewModel", "Quotes: $quotes")
-//            } catch (e: Exception) {
-//                Log.e("MainViewModel", "Error fetching quotes", e)
-//            }
-//        }
-//    }
 
     fun signUp(context: Context, email: String, password: String) {
         isLoading.value = true

@@ -12,6 +12,12 @@ interface QuoteDao {
 //    @Query ("SELECT * FROM quotes WHERE date =:date")
 //    suspend fun getQuoteByDate(date:String):Quote
 
+    @Query("SELECT * FROM quotes WHERE deviceDate = :today ORDER BY dateAdded ASC")
+    fun getQuotesFromToday(today: String): List<Quote>
+
+    @Query("SELECT * FROM quotes WHERE deviceDate = :yesterday ORDER BY dateAdded ASC")
+    fun getQuotesFromYesterday(yesterday: String): List<Quote>
+
     @Query ("SELECT * FROM quotes")
     suspend fun getallQuote(): List<Quote>
 

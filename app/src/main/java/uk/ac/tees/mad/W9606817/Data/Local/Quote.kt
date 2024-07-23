@@ -14,4 +14,5 @@ data class Quote(
     val dateAdded: String,
     val dateModified: String,
     val length: Int,
+    val deviceDate : String
 )
