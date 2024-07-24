@@ -25,7 +25,7 @@ fun LoginScreen(vm: MainViewModel, navController: NavController) {
 
 
     if (loggedIn.value){
-        navController.navigate(NavigateInApp.HOME.route){
+        navController.navigate(NavigateInApp.TODAYSCREEN.route){
             popUpTo(0)
         }
     }

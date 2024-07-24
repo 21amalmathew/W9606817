@@ -25,7 +25,7 @@ fun RegistrationScreen(vm: MainViewModel, navController: NavController) {
     val loggedIn = vm.isSignedIn
 
     if (loggedIn.value){
-        navController.navigate(NavigateInApp.HOME.route){
+        navController.navigate(NavigateInApp.TODAYSCREEN.route){
             popUpTo(0)
         }
     }
