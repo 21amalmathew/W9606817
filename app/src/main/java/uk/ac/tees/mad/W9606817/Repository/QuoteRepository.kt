@@ -1,6 +1,8 @@
 package uk.ac.tees.mad.W9606817.Repository
 
 import android.util.Log
+import uk.ac.tees.mad.W9606817.Data.Favorites.FavoriteDao
+import uk.ac.tees.mad.W9606817.Data.Favorites.FavoriteQuotes
 import uk.ac.tees.mad.W9606817.Data.Local.Quote
 import uk.ac.tees.mad.W9606817.Data.Local.QuoteDao
 import uk.ac.tees.mad.W9606817.Data.Remote.QuoteService
@@ -11,6 +13,7 @@ import javax.inject.Inject
 
 class QuoteRepository @Inject constructor(
     private val quoteDao: QuoteDao,
+    private val favoriteDao: FavoriteDao,
     private val quotesAPI: QuoteService
 ) {
     suspend fun getQuotesAndStore() {
@@ -50,6 +53,13 @@ class QuoteRepository @Inject constructor(
         val yesterdayDate = getYesterdayDate()
         Log.d("Yesterday", yesterdayDate)
         return quoteDao.getQuotesFromYesterday(yesterdayDate)
+    }
+
+    suspend fun addFavorites(favorite: FavoriteQuotes){
+        favoriteDao.insertFavorite(favorite)
+    }
+    fun getFavorites(): List<FavoriteQuotes> {
+        return favoriteDao.getAllFavorites()
     }
 }
 

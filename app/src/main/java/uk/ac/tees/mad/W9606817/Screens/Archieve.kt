@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import uk.ac.tees.mad.W9606817.MainViewModel
+import uk.ac.tees.mad.W9606817.QuoteView
 
 @Composable
 fun Archive(vm: MainViewModel, navController: NavController) {
@@ -27,9 +28,11 @@ fun Archive(vm: MainViewModel, navController: NavController) {
     val quotes = vm.quotes.observeAsState(initial = emptyList())
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp, start = 0.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp, start = 0.dp)
+        ) {
             Text(
                 text = "Archived Quotes",
                 fontSize = 30.sp,
@@ -38,12 +41,15 @@ fun Archive(vm: MainViewModel, navController: NavController) {
                     .weight(1f)
             )
         }
-        Column {
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(quotes.value) { item ->
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text(text = item.content)
-                        Text(text = item.deviceDate)
+        LazyColumn {
+            items(quotes.value) { item ->
+                Column(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
+                    QuoteView(
+                        content = item.content,
+                        author = item.author,
+                        date = item.deviceDate
+                    ) {
+
                     }
                 }
             }

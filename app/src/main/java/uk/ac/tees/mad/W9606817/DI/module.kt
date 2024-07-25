@@ -16,6 +16,8 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import uk.ac.tees.mad.W9606817.Data.Favorites.FavoriteDao
+import uk.ac.tees.mad.W9606817.Data.Favorites.FavoriteDatabase
 import uk.ac.tees.mad.W9606817.Data.Local.QuoteDao
 import uk.ac.tees.mad.W9606817.Data.Local.QuoteDatabase
 import uk.ac.tees.mad.W9606817.Data.Remote.QuoteService
@@ -37,6 +39,17 @@ object module {
         return database.quoteDao()
     }
 
+    @Provides
+    fun provideFavoriteDatabase(
+        @ApplicationContext context: Context
+    ): FavoriteDatabase {
+        return FavoriteDatabase.getFavoriteDatabase(context)
+    }
+
+    @Provides
+    fun provideFavoriteDao(database: FavoriteDatabase): FavoriteDao {
+        return database.favoriteDao()
+    }
     @Provides
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()

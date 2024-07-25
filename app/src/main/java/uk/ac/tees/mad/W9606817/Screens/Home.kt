@@ -73,7 +73,9 @@ fun TodayScreen(vm: MainViewModel, navController: NavController) {
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(quotes.value) { item ->
                         Column(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
-                            QuoteView(content = item.content, author = item.author, date = item.deviceDate)
+                            QuoteView(content = item.content, author = item.author, date = item.deviceDate, onFavClick = {
+                               vm.addFavorites(item)
+                            })
                         }
                     }
                 }

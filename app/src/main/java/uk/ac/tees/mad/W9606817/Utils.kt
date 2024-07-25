@@ -98,22 +98,27 @@ fun MenuDialog(navController: NavController,onDismiss : () -> Unit){
 }
 
 @Composable
-fun QuoteView(content: String, author : String, date : String){
+fun QuoteView(content: String, author : String, date : String, onFavClick : () -> Unit){
         val colors = listOf(Color(0xFF52ACFF), Color(0xFFFFE32C)) // Define your gradient colors
         val brush = Brush.horizontalGradient(colors)
-        Card(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp))) {
-                Column(modifier = Modifier.background(brush = brush).padding(8.dp)) {
+        Card(modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))) {
+                Column(modifier = Modifier
+                        .background(brush = brush)
+                        .padding(8.dp)) {
                         Text(text = content, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         Row {
-                                Text(text = "~ ${author}", modifier = Modifier.weight(1f).padding(4.dp))
+                                Text(text = "~ ${author}", modifier = Modifier
+                                        .weight(1f)
+                                        .padding(4.dp))
                                 Text(text = "-${date}", modifier = Modifier.padding(4.dp))
+                                Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, tint = Color.Red,
+                                        modifier = Modifier.padding(start = 4.dp).clickable {
+                                                onFavClick()
+                                        })
                         }
                 }
         }
 }
 
-@Preview
-@Composable
-fun QuoteViewPreview(){
-        QuoteView(content = "If one does not know to which port is sailing, no wind is favorable.", author = "Seneca the Younger", date = "2024/07/08")
-}
