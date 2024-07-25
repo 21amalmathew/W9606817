@@ -27,4 +27,7 @@ interface QuoteDao {
     @Update
     suspend fun updateQuote(quote: Quote)
 
+    @Query("Select * from quotes WHERE content  LIKE '%' || :content || '%'")
+    suspend fun searchQuotes(content: String) : List<Quote>
+
 }

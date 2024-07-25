@@ -15,4 +15,7 @@ interface FavoriteDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFavorite (favoriteQuotes: FavoriteQuotes)
+
+    @Query("Select * from favorite_quotes WHERE content  LIKE '%' || :content || '%'")
+    suspend fun searchFavorites(content : String) : List<FavoriteQuotes>
 }

@@ -56,6 +56,7 @@ class MainViewModel @Inject constructor(
             delay(1000L)
             _loading.emit(false)
         }
+        loadFavorites()
         getandStore()
     }
 
@@ -73,6 +74,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun searchQuotes(content: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val searchResult = repository.searchQuotes(content)
+            Log.d("Search Result", searchResult.toString())
+            _quotes.postValue(searchResult)
+        }
+    }
     fun quotesFromTodays() {
         viewModelScope.launch(Dispatchers.IO) {
             val quotesfromtoday = repository.getQuotesFromToday()
@@ -89,6 +97,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun searchFavorites(query: String){
+        Log.d("Search Query", query)
+        viewModelScope.launch(Dispatchers.IO) {
+            val searchResult = repository.searchFavorites(query)
+            Log.d("Search Result", searchResult.toString())
+            _favorites.postValue(searchResult)
+        }
+    }
     fun loadFavorites() {
         viewModelScope.launch(Dispatchers.IO) {
             val favorites = repository.getFavorites()
@@ -109,6 +125,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository.addFavorites(result)
         }
+        loadFavorites()
 
     }
 

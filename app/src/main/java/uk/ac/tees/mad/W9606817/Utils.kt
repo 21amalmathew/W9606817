@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -90,8 +91,8 @@ fun MenuDialog(navController: NavController,onDismiss : () -> Unit){
                         Row(modifier = Modifier.clickable {
                                 navController.navigate(NavigateInApp.ARCHIVE.route)
                         }) {
-                                Text(text = "Settings",fontSize = 20.sp)
-                                Icon(imageVector = Icons.Rounded.Settings, contentDescription = null)
+                                Text(text = "Archive",fontSize = 20.sp)
+                                Icon(imageVector = Icons.Rounded.Star, contentDescription = null)
                         }
                 }
         }

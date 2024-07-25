@@ -43,6 +43,11 @@ class QuoteRepository @Inject constructor(
         return quoteDao.getallQuote()
     }
 
+    suspend fun searchQuotes(query: String): List<Quote> {
+        Log.d("Search Query", query)
+        return quoteDao.searchQuotes(query)
+    }
+
     fun getQuotesFromToday(): List<Quote> {
         val todayDate = getTodayDate()
         Log.d("todayDate",todayDate)
@@ -60,6 +65,10 @@ class QuoteRepository @Inject constructor(
     }
     fun getFavorites(): List<FavoriteQuotes> {
         return favoriteDao.getAllFavorites()
+    }
+    suspend fun searchFavorites(query: String): List<FavoriteQuotes> {
+        Log.d("Search Query", query)
+        return favoriteDao.searchFavorites(query)
     }
 }
 
