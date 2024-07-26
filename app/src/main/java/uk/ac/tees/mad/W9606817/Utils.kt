@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import uk.ac.tees.mad.W9606817.Data.Local.Quote
 import uk.ac.tees.mad.W9606817.Navigation.NavigateInApp
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -81,12 +82,12 @@ fun MenuDialog(navController: NavController,onDismiss : () -> Unit){
                                 Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null)
                         }
                         Spacer(modifier = Modifier.height(30.dp))
-                        Row(modifier = Modifier.clickable {
-                                navController.navigate(NavigateInApp.SETTING.route)
-                        }) {
-                                Text(text = "Settings",fontSize = 20.sp)
-                                Icon(imageVector = Icons.Rounded.Settings, contentDescription = null)
-                        }
+//                        Row(modifier = Modifier.clickable {
+//                                navController.navigate(NavigateInApp.DETAIL.route)
+//                        }) {
+//                                Text(text = "Settings",fontSize = 20.sp)
+//                                Icon(imageVector = Icons.Rounded.Settings, contentDescription = null)
+//                        }
                         Spacer(modifier = Modifier.height(30.dp))
                         Row(modifier = Modifier.clickable {
                                 navController.navigate(NavigateInApp.ARCHIVE.route)
@@ -122,6 +123,14 @@ fun QuoteView(content: String, author : String, date : String, onFavClick : () -
                                                 })
                         }
                 }
+        }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun showQuoteDetails(onDismiss: () -> Unit, quote: Quote){
+        AlertDialog(onDismissRequest = { onDismiss() }){
+                Text(text = quote.content)
         }
 }
 

@@ -12,8 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +35,7 @@ import uk.ac.tees.mad.W9606817.QuoteView
 fun TodayScreen(vm: MainViewModel, navController: NavController) {
     val isMenuExpanded = remember { mutableStateOf(false) }
     val quotes = vm.quotesFromToday.observeAsState(initial = emptyList())
+
     Box(modifier = Modifier
         .fillMaxSize()
         .pointerInput(Unit) {
@@ -72,9 +74,14 @@ fun TodayScreen(vm: MainViewModel, navController: NavController) {
             Column {
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(quotes.value) { item ->
-                        Column(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
+                        Column(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                            .clickable {
+                                navController.navigate("detail/${item._id}")
+                            }) {
                             QuoteView(content = item.content, author = item.author, date = item.deviceDate, onFavClick = {
-                               vm.addFavorites(item)
+                                vm.addFavorites(item)
                             })
                         }
                     }

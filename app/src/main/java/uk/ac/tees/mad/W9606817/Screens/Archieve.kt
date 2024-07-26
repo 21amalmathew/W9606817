@@ -1,5 +1,6 @@
 package uk.ac.tees.mad.W9606817.Screens
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.gson.Gson
 import uk.ac.tees.mad.W9606817.MainViewModel
+import uk.ac.tees.mad.W9606817.Navigation.NavigateInApp
 import uk.ac.tees.mad.W9606817.QuoteView
 import uk.ac.tees.mad.W9606817.SortDialog
 
@@ -70,13 +73,9 @@ fun Archive(vm: MainViewModel, navController: NavController) {
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .padding(4.dp)) {
-                    QuoteView(
-                        content = item.content,
-                        author = item.author,
-                        date = item.deviceDate
-                    ) {
-
-                    }
+                    QuoteView(content = item.content, author = item.author, date = item.deviceDate, onFavClick = {
+                        vm.addFavorites(item)
+                    })
                 }
             }
         }
