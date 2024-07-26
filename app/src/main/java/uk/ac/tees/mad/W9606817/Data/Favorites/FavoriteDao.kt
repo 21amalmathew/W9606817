@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import uk.ac.tees.mad.W9606817.Data.Local.Quote
 
 
 @Dao
@@ -18,4 +19,10 @@ interface FavoriteDao {
 
     @Query("Select * from favorite_quotes WHERE content  LIKE '%' || :content || '%'")
     suspend fun searchFavorites(content : String) : List<FavoriteQuotes>
+
+    @Query("Select * from favorite_quotes ORDER BY content ASC")
+    suspend fun sortByASC() : List<FavoriteQuotes>
+
+    @Query("Select * from favorite_quotes ORDER BY content DESC")
+    suspend fun sortByDesc() : List<FavoriteQuotes>
 }

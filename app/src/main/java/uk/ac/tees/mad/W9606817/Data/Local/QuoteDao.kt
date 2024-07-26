@@ -30,4 +30,9 @@ interface QuoteDao {
     @Query("Select * from quotes WHERE content  LIKE '%' || :content || '%'")
     suspend fun searchQuotes(content: String) : List<Quote>
 
+    @Query("Select * from quotes ORDER BY content ASC")
+    suspend fun sortByASC() : List<Quote>
+
+    @Query("Select * from quotes ORDER BY content DESC")
+    suspend fun sortByDesc() : List<Quote>
 }

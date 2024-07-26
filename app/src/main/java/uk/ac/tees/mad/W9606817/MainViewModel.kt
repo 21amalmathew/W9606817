@@ -74,6 +74,34 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun sortByASC(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val sortedQuotes = repository.sortByASC()
+            _quotes.postValue(sortedQuotes)
+        }
+    }
+
+    fun sortByDESC(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val sortedQuotes = repository.sortByDESC()
+            _quotes.postValue(sortedQuotes)
+        }
+    }
+
+    fun sortByFavASC(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val sortedQuotes = repository.sortByFavASC()
+            _favorites.postValue(sortedQuotes)
+        }
+    }
+
+    fun sortByFavDESC(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val sortedQuotes = repository.sortByFavDESC()
+            _favorites.postValue(sortedQuotes)
+        }
+    }
+
     fun searchQuotes(content: String){
         viewModelScope.launch(Dispatchers.IO) {
             val searchResult = repository.searchQuotes(content)

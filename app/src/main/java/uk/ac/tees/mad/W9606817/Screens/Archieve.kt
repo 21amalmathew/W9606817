@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -25,13 +26,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import uk.ac.tees.mad.W9606817.MainViewModel
 import uk.ac.tees.mad.W9606817.QuoteView
+import uk.ac.tees.mad.W9606817.SortDialog
 
 @Composable
 fun Archive(vm: MainViewModel, navController: NavController) {
     val quotes = vm.quotes.observeAsState(initial = emptyList())
     val searchBox = remember { mutableStateOf("") }
+    val filterBox = remember{ mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
+        if (filterBox.value) {
+            SortDialog(onDismiss = { filterBox.value = false }, onAscendingClick = { vm.sortByASC() }, onDescendingClick = { vm.sortByDESC() })
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -44,18 +50,26 @@ fun Archive(vm: MainViewModel, navController: NavController) {
                     .padding(start = 5.dp)
                     .weight(1f)
             )
+            Icon(imageVector = Icons.Rounded.Edit, contentDescription = null, modifier = Modifier
+                .size(30.dp)
+                .clickable { filterBox.value = true })
         }
-        Row(modifier = Modifier.fillMaxWidth().padding(6.dp)) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(6.dp)) {
             OutlinedTextField(value = searchBox.value, onValueChange = { searchBox.value = it },
                 label = {
                     Text(text = "Search")
                 },modifier = Modifier.weight(1f))
-            Icon(imageVector = Icons.Rounded.Search, contentDescription = null, modifier = Modifier.size(70.dp)
+            Icon(imageVector = Icons.Rounded.Search, contentDescription = null, modifier = Modifier
+                .size(70.dp)
                 .clickable { vm.searchQuotes(searchBox.value) })
         }
         LazyColumn {
             items(quotes.value) { item ->
-                Column(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)) {
                     QuoteView(
                         content = item.content,
                         author = item.author,

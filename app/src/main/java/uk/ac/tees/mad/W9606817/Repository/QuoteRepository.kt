@@ -48,6 +48,22 @@ class QuoteRepository @Inject constructor(
         return quoteDao.searchQuotes(query)
     }
 
+    suspend fun sortByASC(): List<Quote> {
+        return quoteDao.sortByASC()
+    }
+
+    suspend fun sortByDESC(): List<Quote> {
+        return quoteDao.sortByDesc()
+    }
+
+    suspend fun sortByFavASC(): List<FavoriteQuotes> {
+        return favoriteDao.sortByASC()
+    }
+
+    suspend fun sortByFavDESC(): List<FavoriteQuotes> {
+        return favoriteDao.sortByDesc()
+    }
+
     fun getQuotesFromToday(): List<Quote> {
         val todayDate = getTodayDate()
         Log.d("todayDate",todayDate)

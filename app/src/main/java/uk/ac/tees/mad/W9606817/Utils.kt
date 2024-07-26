@@ -115,11 +115,39 @@ fun QuoteView(content: String, author : String, date : String, onFavClick : () -
                                         .padding(4.dp))
                                 Text(text = "-${date}", modifier = Modifier.padding(4.dp))
                                 Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, tint = Color.Red,
-                                        modifier = Modifier.padding(start = 4.dp).clickable {
-                                                onFavClick()
-                                        })
+                                        modifier = Modifier
+                                                .padding(start = 4.dp)
+                                                .clickable {
+                                                        onFavClick()
+                                                })
                         }
                 }
         }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SortDialog(onDismiss: () -> Unit, onAscendingClick: () -> Unit, onDescendingClick: () -> Unit){
+        AlertDialog(onDismissRequest = { onDismiss.invoke() }){
+             Column(modifier = Modifier
+                     .padding(16.dp)
+                     .size(250.dp)
+                     .clip(RoundedCornerShape(30.dp))
+                     .background(Color.White),
+                     verticalArrangement = Arrangement.Center,
+                     horizontalAlignment = Alignment.CenterHorizontally) {
+                     Text(text = "Sort The Items")
+                     Text(text = "Sort by Quote Ascending", fontSize = 20.sp, modifier = Modifier
+                             .background(Color.LightGray)
+                             .clickable {
+                                     onAscendingClick()
+                             })
+                     Spacer(modifier = Modifier.height(5.dp))
+                     Text(text = "Sort by Quote Descending", fontSize = 20.sp, modifier = Modifier
+                             .background(Color.LightGray)
+                             .clickable {
+                                     onDescendingClick()
+                             })
+             }   
+        }
+}
