@@ -53,7 +53,7 @@ object module {
     @Provides
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.quotable.io/")
+            .baseUrl("https://zenquotes.io/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()

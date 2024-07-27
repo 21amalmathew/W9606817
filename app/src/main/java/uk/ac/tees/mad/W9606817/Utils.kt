@@ -130,7 +130,7 @@ fun QuoteView(content: String, author : String, date : String, onFavClick : () -
 @Composable
 fun showQuoteDetails(onDismiss: () -> Unit, quote: Quote){
         AlertDialog(onDismissRequest = { onDismiss() }){
-                Text(text = quote.content)
+                Text(text = quote.q)
         }
 }
 

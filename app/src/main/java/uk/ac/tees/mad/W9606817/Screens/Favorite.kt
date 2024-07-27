@@ -82,8 +82,8 @@ fun Favorite(vm: MainViewModel, navController: NavController) {
                     .fillMaxWidth()
                     .padding(4.dp)) {
                     FavQuoteView(
-                        content = item.content,
-                        author = item.author,
+                        content = item.q,
+                        author = item.a,
                         date = item.deviceDate
                     ) { }
                 }

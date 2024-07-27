@@ -12,10 +12,10 @@ interface QuoteDao {
 //    @Query ("SELECT * FROM quotes WHERE date =:date")
 //    suspend fun getQuoteByDate(date:String):Quote
 
-    @Query("SELECT * FROM quotes WHERE deviceDate = :today ORDER BY dateAdded ASC")
+    @Query("SELECT * FROM quotes WHERE deviceDate = :today ORDER BY deviceDate ASC")
     fun getQuotesFromToday(today: String): List<Quote>
 
-    @Query("SELECT * FROM quotes WHERE deviceDate = :yesterday ORDER BY dateAdded ASC")
+    @Query("SELECT * FROM quotes WHERE deviceDate = :yesterday ORDER BY deviceDate ASC")
     fun getQuotesFromYesterday(yesterday: String): List<Quote>
 
     @Query ("SELECT * FROM quotes")
@@ -27,12 +27,12 @@ interface QuoteDao {
     @Update
     suspend fun updateQuote(quote: Quote)
 
-    @Query("Select * from quotes WHERE content  LIKE '%' || :content || '%'")
+    @Query("Select * from quotes WHERE q  LIKE '%' || :content || '%'")
     suspend fun searchQuotes(content: String) : List<Quote>
 
-    @Query("Select * from quotes ORDER BY content ASC")
+    @Query("Select * from quotes ORDER BY q ASC")
     suspend fun sortByASC() : List<Quote>
 
-    @Query("Select * from quotes ORDER BY content DESC")
+    @Query("Select * from quotes ORDER BY q DESC")
     suspend fun sortByDesc() : List<Quote>
 }

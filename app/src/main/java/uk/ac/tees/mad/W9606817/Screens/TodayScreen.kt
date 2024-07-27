@@ -78,9 +78,9 @@ fun TodayScreen(vm: MainViewModel, navController: NavController) {
                             .fillMaxWidth()
                             .padding(4.dp)
                             .clickable {
-                                navController.navigate("detail/${item._id}")
+                                navController.navigate("detail/${item.quoteid}")
                             }) {
-                            QuoteView(content = item.content, author = item.author, date = item.deviceDate, onFavClick = {
+                            QuoteView(content = item.q, author = item.a, date = item.deviceDate, onFavClick = {
                                 vm.addFavorites(item)
                             })
                         }

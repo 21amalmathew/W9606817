@@ -17,12 +17,12 @@ interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFavorite (favoriteQuotes: FavoriteQuotes)
 
-    @Query("Select * from favorite_quotes WHERE content  LIKE '%' || :content || '%'")
+    @Query("Select * from favorite_quotes WHERE q  LIKE '%' || :content || '%'")
     suspend fun searchFavorites(content : String) : List<FavoriteQuotes>
 
-    @Query("Select * from favorite_quotes ORDER BY content ASC")
+    @Query("Select * from favorite_quotes ORDER BY q ASC")
     suspend fun sortByASC() : List<FavoriteQuotes>
 
-    @Query("Select * from favorite_quotes ORDER BY content DESC")
+    @Query("Select * from favorite_quotes ORDER BY q DESC")
     suspend fun sortByDesc() : List<FavoriteQuotes>
 }

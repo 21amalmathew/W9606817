@@ -56,8 +56,9 @@ class MainViewModel @Inject constructor(
             delay(1000L)
             _loading.emit(false)
         }
-        loadFavorites()
         getandStore()
+        loadFavorites()
+
     }
 
     fun getandStore() {
@@ -66,7 +67,7 @@ class MainViewModel @Inject constructor(
             try {
                 repository.getQuotesAndStore()
             } catch (e: Exception) {
-                Log.d("MainViewModel", "Error fetching quotes", e)
+                Log.d("MainViewModel", "Error fetching quotes ${e.localizedMessage}")
             }
             quotesFromTodays()
             quotesFromYesterday()
@@ -143,7 +144,7 @@ class MainViewModel @Inject constructor(
 
         viewModelScope.launch {
             _quotes.value = repository.getAllQuotes()
-            Log.d("MainViewModel", _quotes.value.toString())
+            Log.d("_quotesValue", _quotes.value.toString())
             Log.d("Todays Quote", _quotesFromToday.value.toString())
         }
     }
@@ -159,13 +160,10 @@ class MainViewModel @Inject constructor(
 
     fun mapEntity(quote: Quote): FavoriteQuotes {
         return FavoriteQuotes(
-            _id = quote._id,
-            content = quote.content,
-            author = quote.author,
-            authorSlug = quote.authorSlug,
-            dateAdded = quote.dateAdded,
-            dateModified = quote.dateModified,
-            length = quote.length,
+            c = quote.c,
+            q = quote.q,
+            a = quote.a,
+            h = quote.h,
             deviceDate = quote.deviceDate
         )
     }

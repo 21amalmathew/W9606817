@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface QuoteService {
-    @GET("quotes/random")
-    suspend fun getQuote(@Query("limit") limit : Int): Response<List<QuoteItem>>
+    @GET("api/quotes")
+    suspend fun getQuote(): Response<List<QuoteItem>>
 }

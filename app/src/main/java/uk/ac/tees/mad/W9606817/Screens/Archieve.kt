@@ -73,7 +73,7 @@ fun Archive(vm: MainViewModel, navController: NavController) {
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .padding(4.dp)) {
-                    QuoteView(content = item.content, author = item.author, date = item.deviceDate, onFavClick = {
+                    QuoteView(content = item.q, author = item.a, date = item.deviceDate, onFavClick = {
                         vm.addFavorites(item)
                     })
                 }

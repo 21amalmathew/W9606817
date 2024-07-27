@@ -17,19 +17,18 @@ class QuoteRepository @Inject constructor(
     private val quotesAPI: QuoteService
 ) {
     suspend fun getQuotesAndStore() {
-        val response = quotesAPI.getQuote(10)
+        val response = quotesAPI.getQuote()
         if (response.isSuccessful) {
+            Log.d("Response","Success")
+            Log.d("Response",response.body().toString())
             val currentDate = LocalDate.now()
             Log.d("currentDate", currentDate.toString())
             response.body()?.let { quotes ->
                 quoteDao.insertQuote(quotes.map {
-                    Quote(_id = it._id,
-                        author = it.author,
-                        content = it.content,
-                        authorSlug = it.authorSlug,
-                        dateAdded = it.dateAdded,
-                        dateModified = it.dateModified,
-                        length = it.length,
+                    Quote(c = it.c,
+                        a = it.a,
+                        q = it.q,
+                        h = it.h,
                         deviceDate = currentDate.toString())
                 })
                 Log.d("QuoteResponse", quotes.toString())
