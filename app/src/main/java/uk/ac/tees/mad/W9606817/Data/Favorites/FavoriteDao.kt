@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.W9606817.Data.Favorites
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -25,4 +26,7 @@ interface FavoriteDao {
 
     @Query("Select * from favorite_quotes ORDER BY q DESC")
     suspend fun sortByDesc() : List<FavoriteQuotes>
+
+    @Delete
+    suspend fun deleteFav(favoriteQuotes: FavoriteQuotes)
 }

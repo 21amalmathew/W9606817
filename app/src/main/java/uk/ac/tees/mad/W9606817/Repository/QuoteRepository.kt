@@ -81,6 +81,9 @@ class QuoteRepository @Inject constructor(
     fun getFavorites(): List<FavoriteQuotes> {
         return favoriteDao.getAllFavorites()
     }
+    suspend fun deleteFav(content:FavoriteQuotes){
+        favoriteDao.deleteFav(content)
+    }
     suspend fun searchFavorites(query: String): List<FavoriteQuotes> {
         Log.d("Search Query", query)
         return favoriteDao.searchFavorites(query)

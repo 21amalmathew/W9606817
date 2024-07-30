@@ -17,6 +17,7 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -105,7 +106,9 @@ fun QuoteView(content: String, author : String, date : String, onFavClick : () -
         val brush = Brush.horizontalGradient(colors)
         Card(modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))) {
+                .clip(RoundedCornerShape(8.dp)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp) // Applying elevation
+        ) {
                 Column(modifier = Modifier
                         .background(brush = brush)
                         .padding(8.dp)) {

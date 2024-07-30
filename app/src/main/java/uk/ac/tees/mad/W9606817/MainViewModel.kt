@@ -213,4 +213,11 @@ class MainViewModel @Inject constructor(
             }
     }
 
+    fun deleteFav(fav: FavoriteQuotes){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteFav(fav)
+        }
+        loadFavorites()
+    }
+
 }
