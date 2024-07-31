@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,8 +61,12 @@ fun LoginScreen(vm: MainViewModel, navController: NavController) {
                     Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 }
             }) {
+                if(isLoading.value){
+                    CircularProgressIndicator()
+                }else{
                 Text(text = "Log in")
             }
+                }
         }
     }
 }

@@ -1,5 +1,6 @@
 package uk.ac.tees.mad.W9606817.Navigation
 
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -30,39 +31,44 @@ enum class NavigateInApp(val route:String){
     ARCHIVE("archive"),
 }
 
-
 @Composable
-fun appNavigation(){
+fun appNavigation(callDark: () -> Unit){
     val navController = rememberNavController()
     val vm : MainViewModel = viewModel()
-    NavHost(navController = navController, startDestination = NavigateInApp.SPLASHSCREEN.route ){
-        composable(NavigateInApp.SPLASHSCREEN.route){
-            SplashScreen(vm,navController)
-        }
-        composable(NavigateInApp.AUTHENTICATIONSCREEN.route){
-            AuthenticationScreen(vm,navController)
-        }
-        composable(NavigateInApp.REGISTER.route){
-            RegistrationScreen(vm,navController)
-        }
-        composable(NavigateInApp.LOGIN.route){
-            LoginScreen(vm,navController)
-        }
-        composable(NavigateInApp.TODAYSCREEN.route){
-            TodayScreen(vm,navController)
-        }
-        composable(NavigateInApp.YESTERDAYSCREEN.route){
-            YesterdayScreen(vm,navController)
-        }
-        composable(NavigateInApp.DETAIL.route, arguments = listOf(navArgument("quoteId") { type = NavType.StringType })) { backStackEntry ->
-            val quoteId = backStackEntry.arguments?.getString("quoteId") ?: ""
-            Detail(vm, quoteId)
-        }
-        composable(NavigateInApp.FAVORITE.route){
-            Favorite(vm,navController)
-        }
-        composable(NavigateInApp.ARCHIVE.route){
-            Archive(vm,navController)
+    Surface {
+    NavHost(navController = navController, startDestination = NavigateInApp.SPLASHSCREEN.route ) {
+
+            composable(NavigateInApp.SPLASHSCREEN.route) {
+                SplashScreen(vm, navController)
+            }
+            composable(NavigateInApp.AUTHENTICATIONSCREEN.route) {
+                AuthenticationScreen(vm, navController)
+            }
+            composable(NavigateInApp.REGISTER.route) {
+                RegistrationScreen(vm, navController)
+            }
+            composable(NavigateInApp.LOGIN.route) {
+                LoginScreen(vm, navController)
+            }
+            composable(NavigateInApp.TODAYSCREEN.route) {
+                TodayScreen(vm, navController, callDark = callDark)
+            }
+            composable(NavigateInApp.YESTERDAYSCREEN.route) {
+                YesterdayScreen(vm, navController)
+            }
+            composable(
+                NavigateInApp.DETAIL.route,
+                arguments = listOf(navArgument("quoteId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val quoteId = backStackEntry.arguments?.getString("quoteId") ?: ""
+                Detail(vm, quoteId)
+            }
+            composable(NavigateInApp.FAVORITE.route) {
+                Favorite(vm, navController)
+            }
+            composable(NavigateInApp.ARCHIVE.route) {
+                Archive(vm, navController)
+            }
         }
     }
 }

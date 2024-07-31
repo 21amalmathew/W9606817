@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,7 +33,7 @@ import uk.ac.tees.mad.W9606817.Navigation.NavigateInApp
 import uk.ac.tees.mad.W9606817.QuoteView
 
 @Composable
-fun TodayScreen(vm: MainViewModel, navController: NavController) {
+fun TodayScreen(vm: MainViewModel, navController: NavController, callDark: () -> Unit) {
     val isMenuExpanded = remember { mutableStateOf(false) }
     val quotes = vm.quotesFromToday.observeAsState(initial = emptyList())
 
@@ -62,6 +63,9 @@ fun TodayScreen(vm: MainViewModel, navController: NavController) {
                         .padding(start = 5.dp)
                         .weight(1f)
                 )
+                Button(onClick = { callDark() }) {
+                    Text(text = "Dark Theme")
+                }
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = null,
